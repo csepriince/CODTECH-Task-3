@@ -1,0 +1,97 @@
+CREATE DATABASE hotel_booking_db;
+USE hotel_booking_db;
+
+CREATE TABLE Customers (
+    customer_id INT PRIMARY KEY,
+    name VARCHAR(100),
+    phone VARCHAR(15),
+    city VARCHAR(50)
+);
+
+CREATE TABLE Rooms (
+    room_id INT PRIMARY KEY,
+    room_number VARCHAR(10),
+    room_type VARCHAR(50),
+    price_per_night INT,
+    status VARCHAR(20)
+);
+
+CREATE TABLE Bookings (
+    booking_id INT PRIMARY KEY,
+    customer_id INT,
+    room_id INT,
+    check_in DATE,
+    check_out DATE,
+    total_amount INT,
+    payment_status VARCHAR(20),
+    FOREIGN KEY (customer_id) REFERENCES Customers(customer_id),
+    FOREIGN KEY (room_id) REFERENCES Rooms(room_id)
+);
+
+INSERT INTO Customers VALUES
+(1,'Rahul Sharma','9876543210','Delhi'),
+(2,'Priya Patel','9876543211','Mumbai'),
+(3,'Amit Singh','9876543212','Pune'),
+(4,'Sneha Gupta','9876543213','Jaipur'),
+(5,'Rohan Kumar','9876543214','Bangalore');
+
+INSERT INTO Rooms VALUES
+(1,'101','Single',1000,'Booked'),
+(2,'102','Double',1800,'Available'),
+(3,'201','Suite',3500,'Booked'),
+(4,'202','Double',1800,'Available'),
+(5,'301','Single',1000,'Booked');
+
+INSERT INTO Bookings VALUES
+(1,1,1,'2024-01-05','2024-01-08',3000,'Paid'),
+(2,2,3,'2024-01-10','2024-01-13',10500,'Paid'),
+(3,3,5,'2024-02-01','2024-02-03',2000,'Pending'),
+(4,4,2,'2024-02-10','2024-02-12',3600,'Paid'),
+(5,5,1,'2024-03-01','2024-03-04',3000,'Pending');
+
+SELECT * FROM Customers;
+
+SELECT * FROM Rooms;
+
+SELECT * FROM Rooms
+WHERE status = 'Available';
+
+SELECT * FROM Bookings;
+
+SELECT c.name,
+       r.room_number,
+       r.room_type,
+       b.check_in,
+       b.check_out,
+       b.total_amount
+FROM Bookings b
+JOIN Customers c ON b.customer_id = c.customer_id
+JOIN Rooms r ON b.room_id = r.room_id;
+
+SELECT c.name,
+       b.total_amount,
+       b.payment_status
+FROM Bookings b
+JOIN Customers c ON b.customer_id = c.customer_id
+WHERE b.payment_status = 'Pending';
+
+SELECT SUM(total_amount) AS Total_Revenue
+FROM Bookings
+WHERE payment_status = 'Paid';
+
+SELECT r.room_type,
+       COUNT(b.booking_id) AS Total_Bookings
+FROM Rooms r
+JOIN Bookings b ON r.room_id = b.room_id
+GROUP BY r.room_type;
+
+UPDATE Bookings
+SET payment_status = 'Paid'
+WHERE booking_id = 3;
+
+UPDATE Rooms
+SET status = 'Available'
+WHERE room_id = 1;
+
+DELETE FROM Bookings
+WHERE booking_id = 5;
