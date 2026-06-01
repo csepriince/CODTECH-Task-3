@@ -1,0 +1,23 @@
+=== CUSTOMERS ===
+customer_id,name,phone,city
+1,Rahul Sharma,9876543210,Delhi
+2,Priya Patel,9876543211,Mumbai
+3,Amit Singh,9876543212,Pune
+4,Sneha Gupta,9876543213,Jaipur
+5,Rohan Kumar,9876543214,Bangalore
+
+=== ROOMS ===
+room_id,room_number,room_type,price_per_night,status
+1,101,Single,1000,Booked
+2,102,Double,1800,Available
+3,201,Suite,3500,Booked
+4,202,Double,1800,Available
+5,301,Single,1000,Booked
+
+=== BOOKINGS ===
+booking_id,customer_id,room_id,check_in,check_out,total_amount,payment_status
+1,1,1,2024-01-05,2024-01-08,3000,Paid
+2,2,3,2024-01-10,2024-01-13,10500,Paid
+3,3,5,2024-02-01,2024-02-03,2000,Pending
+4,4,2,2024-02-10,2024-02-12,3600,Paid
+5,5,1,2024-03-01,2024-03-04,3000,Pending
